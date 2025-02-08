@@ -3,7 +3,7 @@ import repoReducer from "./reducers/slices/repoSlice";
 
 export const store = configureStore({
   reducer: {
-    repo: repoReducer,
+    repos: repoReducer,
   },
 });
 

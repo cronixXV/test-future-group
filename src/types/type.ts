@@ -1,16 +1,30 @@
 export interface Repo {
   id: number;
   name: string;
-  description: string | null;
   html_url: string;
+  description: string | null;
   stargazers_count: number;
   updated_at: string;
 }
 
 export interface RepoState {
   repos: Repo[];
-  loading: boolean;
+  status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  page: number;
-  hasMore: boolean;
+}
+
+export interface SearchInputProps {
+  onSearch: (query: string) => void;
+}
+
+export interface RepoCardProps {
+  name: string;
+  description: string | null;
+  html_url: string;
+  stargazers_count: number;
+  updated_at: string;
+}
+
+export interface RepoListProps {
+  username: string;
 }

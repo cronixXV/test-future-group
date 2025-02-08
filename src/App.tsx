@@ -1,10 +1,19 @@
+import { useState } from "react";
+import RepoList from "./components/RepoList";
 import SeacrhInput from "./components/SeacrhInput";
+import { Container } from "@mui/material";
 
 function App() {
+  const [username, setUsername] = useState("");
+
+  const handleSearch = (query: string) => {
+    setUsername(query);
+  };
   return (
-    <>
-      <SeacrhInput />
-    </>
+    <Container maxWidth="xl">
+      <SeacrhInput onSearch={handleSearch} />
+      <RepoList username={username} />
+    </Container>
   );
 }
 

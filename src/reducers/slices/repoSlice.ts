@@ -1,43 +1,53 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { fetchUserRepos } from "../../libs/api";
 import { Repo, RepoState } from "../../types/type";
 
 const initialState: RepoState = {
   repos: [],
-  loading: false,
+  status: "idle",
   error: null,
-  page: 1,
-  hasMore: true,
 };
 
+export const fetchRepos = createAsyncThunk<
+  Repo[],
+  { username: string; page: number }
+>("repos/fetchRepos", async ({ username, page }, { rejectWithValue }) => {
+  try {
+    const data = await fetchUserRepos(username, page);
+    return data;
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "Неизвестная ошибка"
+    );
+  }
+});
+
 const repoSlice = createSlice({
-  name: "repo",
+  name: "repos",
   initialState,
   reducers: {
-    setRepo: (state, action: PayloadAction<Repo[]>) => {
-      state.repos = action.payload;
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.loading = action.payload;
-    },
-    setError: (state, action: PayloadAction<string | null>) => {
-      state.error = action.payload;
-    },
-    setPage: (state, action: PayloadAction<number>) => {
-      state.page = action.payload;
-    },
-    setHasMore: (state, action: PayloadAction<boolean>) => {
-      state.hasMore = action.payload;
-    },
-    resetRepo: (state) => {
+    clearRepos: (state) => {
       state.repos = [];
-      state.page = 1;
-      state.hasMore = true;
+      state.status = "idle";
       state.error = null;
     },
   },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchRepos.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRepos.fulfilled, (state, action: PayloadAction<Repo[]>) => {
+        state.status = "succeeded";
+        state.repos = [...state.repos, ...action.payload];
+      })
+      .addCase(fetchRepos.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
+      });
+  },
 });
 
-export const { setRepo, setLoading, setError, setPage, setHasMore, resetRepo } =
-  repoSlice.actions;
-
+export const { clearRepos } = repoSlice.actions;
 export default repoSlice.reducer;
