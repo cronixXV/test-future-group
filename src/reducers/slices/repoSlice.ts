@@ -37,10 +37,12 @@ const repoSlice = createSlice({
     builder
       .addCase(fetchRepos.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(fetchRepos.fulfilled, (state, action: PayloadAction<Repo[]>) => {
         state.status = "succeeded";
         state.repos = [...state.repos, ...action.payload];
+        state.error = null;
       })
       .addCase(fetchRepos.rejected, (state, action) => {
         state.status = "failed";
