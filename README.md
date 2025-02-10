@@ -1,50 +1,95 @@
-# React + TypeScript + Vite
+# Repo Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение для поиска репозиториев на GitHub по имени пользователя. Включает функционал для поиска, загрузки данных, и обработки ошибок.
 
-Currently, two official plugins are available:
+## Технологии:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React
+- TypeScript
+- Redux Toolkit
+- MUI (Material UI)
+- Vite
+- Docker
 
-## Expanding the ESLint configuration
+## Запуск проекта:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Клонировать репозиторий:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/cronixXV/test-future-group
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Установить зависимости:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+npm install
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Запустить проект:
+
+npm run dev
+
+## Ручное тестирование
+
+1. Тестирование поиска репозиториев
+
+Шаги:
+
+Открыл приложение.
+Ввел валидное имя пользователя GitHub в поле поиска.
+Убедился, что список репозиториев отобразился корректно.
+Проверил, что при введении неверного имени пользователя отображается сообщение об ошибке: "Пользователь не найден".
+Ожидаемый результат:
+При вводе валидного имени пользователя должны отобразиться соответствующие репозитории.
+При введении неверного имени пользователя должно появиться сообщение об ошибке.
+
+2. Тестирование обработки ошибок
+
+Шаги:
+
+Ввел несуществующее имя пользователя.
+Убедился, что на экране появилось сообщение об ошибке: "Ошибка: Пользователь не найден".
+Попробовал ввести имя пользователя с ограничениями, например, с пробелами или специальными символами, и проверил, что отображается корректная ошибка.
+Ожидаемый результат:
+При неправильном имени пользователя должна быть корректная обработка ошибок и информирование пользователя.
+
+3. Тестирование состояния загрузки
+
+Шаги:
+
+Ввел имя пользователя, и проверил, что отображается кольцо загрузки, когда данные загружаются.
+Убедился, что кольцо загрузки пропадает после получения данных.
+Ожидаемый результат:
+Кольцо загрузки должно отображаться, пока идет запрос данных, и исчезать после их получения.
+
+4. Тестирование корректности данных
+
+Шаги:
+
+Ввел имя пользователя и проверил, что отображаются репозитории с корректной информацией.
+Проверил, что данные репозитория актуальны и соответствуют тому, что есть на GitHub.
+Ожидаемый результат:
+Все данные должны быть точными и соответствовать информации на GitHub.
+
+5. Тестирование адаптивности интерфейса
+
+Шаги:
+
+Изменил размеры окна браузера, чтобы проверить, как адаптируется интерфейс.
+Проверил, что элементы интерфейса не выходят за пределы экрана, а также что интерфейс остается удобным для использования.
+Ожидаемый результат:
+Интерфейс должен корректно адаптироваться к различным разрешениям экранов.
+
+6. Тестирование пагинации (бесконечной прокрутки)
+
+Шаги:
+
+Прокрутил страницу до конца, чтобы инициировать запрос на следующую страницу с репозиториями.
+Убедился, что новые данные загружаются автоматически и добавляются к списку.
+Ожидаемый результат:
+Новые репозитории должны подгружаться корректно при достижении конца страницы.
+
+7. Тестирование правильности отображения информации о репозиториях
+
+Шаги:
+Открыл несколько карточек репозиториев и проверил, что информация о каждом репозитории отображается правильно.
+Ожидаемый результат:
+Все данные о репозиториях должны быть отображены корректно.
