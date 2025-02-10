@@ -10,7 +10,7 @@ function App() {
     setUsername(query);
   };
   return (
-    <Container maxWidth="xl">
+    <Container>
       <SeacrhInput onSearch={handleSearch} />
       <RepoList username={username} />
     </Container>

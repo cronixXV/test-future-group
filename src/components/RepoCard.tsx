@@ -10,7 +10,7 @@ function RepoCard({
   updated_at,
 }: RepoCardProps) {
   return (
-    <Card sx={{ marginBottom: 2, padding: 2, width: "400px", height: "250px" }}>
+    <Card sx={{ marginBottom: 2, padding: 1, width: "280px", height: "150px" }}>
       <CardContent>
         <Typography variant="h6" component="div">
           <Link href={html_url} target="_blank" rel="noopener noreferrer">

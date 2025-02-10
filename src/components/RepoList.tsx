@@ -81,7 +81,11 @@ function RepoList({ username }: RepoListProps) {
       ) : (
         <Grid2 container spacing={2} mt={2}>
           {repos.map((repo) => (
-            <Grid2 size={{ xs: 12, md: 4, lg: 4 }} key={repo.id}>
+            <Grid2
+              size={{ xs: 12, md: 6, lg: 4 }}
+              key={repo.id}
+              width={"fit-content"}
+            >
               <RepoCard {...repo} />
             </Grid2>
           ))}
